@@ -1,1 +1,10 @@
+# Editor cruft.
+.*.swp
+*~
+
+# Generated code.
+*.gen.go
+
+# Generated binary.
 /xbsapi
+

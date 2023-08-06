@@ -1,0 +1,219 @@
+---
+openapi: 3.0.1
+info:
+  title: XbrowsersyncAPI
+  version: 1.6.0
+
+paths:
+  /bookmarks:
+    post:
+      tags: [bookmarks]
+      summary: Create a bookmark sync
+      description: Add a new bookmark sync
+      requestBody:
+        description: Bookmark sync
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bookmarks.BookmarkCreateModel'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkCreateResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkCreateResponse'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkCreateResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkCreateResponse'
+      security:
+        - BasicAuth: []
+      x-codegen-request-body-name: bookmark
+  /bookmarks/{id}:
+    get:
+      tags: [bookmarks]
+      summary: Show a bookmark sync version
+      description: Get bookmark sync version by ID
+      parameters:
+        - name: id
+          in: path
+          description: Bookmark ID
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkShowResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkShowResponse'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkShowResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkShowResponse'
+      security:
+        - BasicAuth: []
+    put:
+      tags: [bookmarks]
+      summary: Update a bookmark sync
+      description: Update an existing bookmark sync
+      parameters:
+        - name: id
+          in: path
+          description: Bookmark ID
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Update
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/bookmarks.BookmarkUpdateModel'
+        required: true
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkUpdateResponse'
+        400:
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkUpdateResponse'
+        404:
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkUpdateResponse'
+        500:
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/bookmarks.BookmarkUpdateResponse'
+      security:
+        - BasicAuth: []
+      x-codegen-request-body-name: bookmark
+  /infos:
+    get:
+      tags: [infos]
+      summary: List infos
+      description: Get all infos
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/infos.InfoShowModel'
+      security:
+        - BasicAuth: []
+
+components:
+  schemas:
+    bookmarks.BookmarkCreateModel:
+      required: [version]
+      type: object
+      properties:
+        version:
+          type: string
+    bookmarks.BookmarkCreateResponse:
+      type: object
+      properties:
+        bookmark:
+          $ref: '#/components/schemas/bookmarks.BookmarkShowModel'
+        message:
+          type: string
+        success:
+          type: boolean
+    bookmarks.BookmarkShowModel:
+      type: object
+      properties:
+        bookmarks:
+          type: string
+        id:
+          type: string
+        lastUpdated:
+          type: string
+        version:
+          type: string
+    bookmarks.BookmarkShowResponse:
+      type: object
+      properties:
+        bookmark:
+          $ref: '#/components/schemas/bookmarks.BookmarkShowModel'
+        message:
+          type: string
+        success:
+          type: boolean
+    bookmarks.BookmarkUpdateModel:
+      required: [bookmarks, lastUpdated]
+      type: object
+      properties:
+        bookmarks:
+          type: string
+        lastUpdated:
+          type: string
+    bookmarks.BookmarkUpdateResponse:
+      type: object
+      properties:
+        bookmark:
+          $ref: '#/components/schemas/bookmarks.BookmarkShowModel'
+        message:
+          type: string
+        success:
+          type: boolean
+    infos.InfoShowModel:
+      type: object
+      properties:
+        location:
+          type: string
+        maxSyncSize:
+          type: integer
+        message:
+          type: string
+        status:
+          type: integer
+        version:
+          type: string
+
+  securitySchemes:
+    BasicAuth:
+      type: http
+      scheme: basic
