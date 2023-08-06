@@ -13,15 +13,14 @@ See [xbscli](https://github.com/mrusme/xbscli) for a command line interface
 ## Build
 
 ```sh
-$ make install-deps
-$ make
+make
 ```
 
 
 ## Run
 
 ```sh
-$ xbsapi
+./xbsapi
 ```
 
 Connect from xBrowserSync clients by using e.g. `http://host:8000/api/v1` as 
@@ -266,5 +265,3 @@ gcloud functions deploy GCFHandler --runtime go116 --trigger-http
 ```
 
 TODO: Database
-
-

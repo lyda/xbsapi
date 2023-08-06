@@ -4,8 +4,8 @@ FROM ${ARCH}golang:alpine AS builder
 WORKDIR /go/src/app
 COPY . .
 
-RUN apk add --update-cache build-base \
- && go build
+RUN apk add --update-cache build-base git \
+    && make
 
 FROM ${ARCH}alpine:latest AS container
 
